@@ -1,0 +1,18 @@
+{
+  "name": "hershel-theodore-layton/sql-queryf-codegen",
+  "description": "Customize your queryf DSL to your hearts content",
+  "license": "MIT",
+  "require": {
+    "hhvm": ">=4.128"
+  },
+  "require-dev": {
+    "hershel-theodore-layton/test-chain": "<1",
+    "hershel-theodore-layton/expect": "<1",
+    "hershel-theodore-layton/portable-hack-ast-linters-server": ">=0.3.4 <1"
+  },
+  "config": {
+    "allow-plugins": {
+      "hhvm/hhvm-autoload": true
+    }
+  }
+}
