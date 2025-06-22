@@ -3,7 +3,10 @@
   "description": "Customize your queryf DSL to your hearts content",
   "license": "MIT",
   "require": {
-    "hhvm": ">=4.102"
+    "hhvm": ">=4.102",
+    "hershel-theodore-layton/printf-state-machine": "dev-master",
+    "hershel-theodore-layton/sql-queryf": "dev-master",
+    "hershel-theodore-layton/static-type-assertion-code-generator": "<2"
   },
   "require-dev": {
     "hershel-theodore-layton/test-chain": "<1",
