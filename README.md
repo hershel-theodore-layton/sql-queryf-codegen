@@ -1,3 +1,3 @@
 # SQL Queryf Codegen
 
-_Customize your queryf DSL to your hearts content._
+_Customize your queryf DSL to your heart's content._

@@ -1,6 +1,6 @@
 {
   "name": "hershel-theodore-layton/sql-queryf-codegen",
-  "description": "Customize your queryf DSL to your hearts content",
+  "description": "Customize your queryf DSL to your heart's content",
   "license": "MIT",
   "require": {
     "hhvm": "^4.102",
@@ -15,8 +15,12 @@
     "hershel-theodore-layton/expect": "<1"
   },
   "scripts": {
-    "post-install-cmd": [".github/workflows/prepare-environment.sh"],
-    "post-update-cmd": [".github/workflows/prepare-environment.sh"]
+    "post-install-cmd": [
+      ".github/workflows/prepare-environment.sh"
+    ],
+    "post-update-cmd": [
+      ".github/workflows/prepare-environment.sh"
+    ]
   },
   "config": {
     "allow-plugins": {
