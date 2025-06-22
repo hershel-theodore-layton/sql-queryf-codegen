@@ -12,7 +12,7 @@ use namespace HTL\{PrintfStateMachine, SqlQueryfCodegen};
 async function sql_codegen_generate_async()[defaults]: Awaitable<void> {
   $argv = \HH\global_get('argv') as vec<_> |> Vec\map($$, $x ==> $x as string);
 
-  $fifty_milliseconds_in_ns = 50_000_000;
+  $fifty_milliseconds_in_ns = (int)50e6;
 
   try {
     $preamble =
