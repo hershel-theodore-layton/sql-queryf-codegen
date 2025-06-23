@@ -20,7 +20,7 @@ final abstract class Presets {
    * At runtime, these will emit a `%s` specifier, to placate the "no-quotes"
    * check in squangle.
    */
-  public static function theWholeEnshalada(
+  public static function extended(
     PrintfStateMachine\Factory $factory,
   )[]: PrintfStateMachine\Factory {
     return $factory

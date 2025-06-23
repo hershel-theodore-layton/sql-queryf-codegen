@@ -52,7 +52,7 @@ async function sql_codegen_generate_async()[defaults]: Awaitable<void> {
   );
 
   if (C\contains($argv, '--extended')) {
-    $factory = SqlQueryfCodegen\Presets::theWholeEnshalada($factory);
+    $factory = SqlQueryfCodegen\Presets::extended($factory);
   } else if (C\contains($argv, '--to-string')) {
     $factory = SqlQueryfCodegen\Presets::renderToString($factory);
   } else {
