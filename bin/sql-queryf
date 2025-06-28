@@ -1,0 +1,13 @@
+#!/usr/bin/env hhvm
+/** sql-queryf-codegen is MIT licensed, see /LICENSE. */
+namespace HTL\SqlQueryfCodegen\Bin;
+
+/**
+ * Usage: cat tests/codegen/preamble.in | hhvm bin/sql-codegen-generate.hack --extended > tests/codegen/engine.hack
+ * Usage: cat vendor/hershel-theodore-layton/sql-queryf/src/_Private/preamble.in | hhvm bin/sql-codegen-generate.hack --to-string
+ */
+<<__EntryPoint>>
+async function sql_queryf_wrapped_async()[defaults]: Awaitable<void> {
+  require_once __DIR__ . '/sql-queryf.hack';
+  await sql_queryf_async();
+}

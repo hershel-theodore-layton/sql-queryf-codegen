@@ -6,7 +6,9 @@ use namespace HTL\{PrintfStateMachine, SqlQueryf};
 
 final abstract class Presets {
   /**
-   * This preset includes many of the conversions I use in my applications.
+   * This preset includes many of the conversions I use in my applications
+   * and some which demonstate the possibilities. You can mix and match what
+   * you like to create your own extended set, or use these as-is, your pick.
    *
    * The scalars are null-aware, so `%d` accepts `int`, not `?int`.
    * If you wanted to pass a nullable int, use `%?d`.

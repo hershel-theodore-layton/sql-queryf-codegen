@@ -1,3 +1,4 @@
+#!/usr/bin/env hhvm
 /** sql-queryf-codegen is MIT licensed, see /LICENSE. */
 namespace HTL\SqlQueryfCodegen\Bin;
 
@@ -9,7 +10,7 @@ use namespace HTL\{PrintfStateMachine, SqlQueryfCodegen};
  * Usage: cat vendor/hershel-theodore-layton/sql-queryf/src/_Private/preamble.in | hhvm bin/sql-codegen-generate.hack --to-string
  */
 <<__EntryPoint>>
-async function sql_codegen_generate_async()[defaults]: Awaitable<void> {
+async function sql_queryf_async()[defaults]: Awaitable<void> {
   $argv = \HH\global_get('argv') as vec<_> |> Vec\map($$, $x ==> $x as string);
 
   $fifty_milliseconds_in_ns = (int)50e6;
