@@ -1,5 +1,9 @@
 {
   "name": "hershel-theodore-layton/sql-queryf-codegen",
+  "bin": [
+    "bin/sql-queryf",
+    "bin/sql-queryf.hack"
+  ],
   "description": "Customize your queryf DSL to your heart's content",
   "license": "MIT",
   "require": {
