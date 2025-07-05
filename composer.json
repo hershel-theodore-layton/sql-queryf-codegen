@@ -8,8 +8,8 @@
   "license": "MIT",
   "require": {
     "hhvm": ">=4.102",
-    "hershel-theodore-layton/printf-state-machine": "dev-master",
-    "hershel-theodore-layton/sql-queryf": "dev-master",
+    "hershel-theodore-layton/printf-state-machine": "<1",
+    "hershel-theodore-layton/sql-queryf": "<1",
     "hershel-theodore-layton/static-type-assertion-code-generator": "<2"
   },
   "require-dev": {

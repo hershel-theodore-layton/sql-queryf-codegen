@@ -69,7 +69,7 @@ final abstract class Presets {
           'Q',
           PrintfStateMachine\sequence_transform("'%s'"),
           PrintfStateMachine\hack_type(
-            '\\'.SqlQueryf\HipHopLibSqlQueryPack::class,
+            '\\'.(string)SqlQueryf\HipHopLibSqlQueryPack::class,
           ),
           null,
           PrintfStateMachine\value_transform(
@@ -99,7 +99,7 @@ final abstract class Presets {
   public static function partialBase(
     PrintfStateMachine\Factory $factory,
   )[]: PrintfStateMachine\Factory {
-    $pack = '\\'.SqlQueryf\QueryPack::class;
+    $pack = '\\'.(string)SqlQueryf\QueryPack::class;
     return $factory
       ->withRewrite<string>('C')
       ->withRewrite<string>('T')
@@ -190,7 +190,7 @@ final abstract class Presets {
   public static function partialEnums(
     PrintfStateMachine\Factory $factory,
   )[]: PrintfStateMachine\Factory {
-    $tup = '\\'.SqlQueryf\AnyEnum::class;
+    $tup = '\\'.(string)SqlQueryf\AnyEnum::class;
     return $factory
       ->with(new PrintfStateMachine\SingleArgumentHandler(
         'e',
