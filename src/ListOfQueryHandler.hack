@@ -2,6 +2,7 @@
 namespace HTL\SqlQueryfCodegen;
 
 use namespace HTL\PrintfStateMachine;
+use function var_export_pure;
 
 final class ListOfQueryHandler implements PrintfStateMachine\Handler {
   public function __construct(
@@ -21,7 +22,7 @@ $new_format .= \HH\Lib\C\count($arg)
   |> \HH\Lib\Vec\fill($$, '%Q')
   |> \HH\Lib\Str\join($$, 
 CODE
-      . PrintfStateMachine\_Private\string_export_pure($this->joinSequence).<<<'CODE'
+      . var_export_pure($this->joinSequence).<<<'CODE'
 );
 foreach ($arg as $pack) {
   $pack as \HTL\SqlQueryf\QueryPack;
