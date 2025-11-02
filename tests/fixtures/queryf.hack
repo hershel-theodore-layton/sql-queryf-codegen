@@ -32,5 +32,5 @@ function queryf_to_string(
   )
     |> Extended\engine($$->getFormat(), $$->getArguments())
     |> ToString\engine(...$$)
-    |> \vsprintf(...$$);
+    |> \vsprintf(...$$) as string;
 }
