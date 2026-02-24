@@ -2,7 +2,7 @@
 namespace HTL\SqlQueryfCodegen\Tests;
 
 use namespace HH;
-use namespace HTL\SqlQueryf;
+use namespace HTL\{HH4Shim, SqlQueryf};
 use namespace HTL\SqlQueryf\ToString;
 
 function queryf(
@@ -10,7 +10,7 @@ function queryf(
   mixed ...$args
 )[]: SqlQueryf\QueryPack {
   return SqlQueryf\QueryPack::createWithoutTypechecking_UNSAFE(
-    $format as string,
+    HH4Shim\to_mixed($format) as string,
     vec($args),
   );
 }
@@ -19,7 +19,7 @@ function queryf_to_vanilla(
   HH\FormatString<Extended\Sql> $format,
   mixed ...$args
 )[]: (string, vec<mixed>) {
-  return Extended\engine($format as string, vec($args));
+  return Extended\engine(HH4Shim\to_mixed($format) as string, vec($args));
 }
 
 function queryf_to_string(
@@ -27,7 +27,7 @@ function queryf_to_string(
   mixed ...$args
 )[]: string {
   return SqlQueryf\QueryPack::createWithoutTypechecking_UNSAFE(
-    $format as string,
+    HH4Shim\to_mixed($format) as string,
     vec($args),
   )
     |> Extended\engine($$->getFormat(), $$->getArguments())
