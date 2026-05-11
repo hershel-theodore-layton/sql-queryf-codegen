@@ -281,6 +281,6 @@ final abstract class Presets {
   public static function partialEmbeddedLiteralStrings(
     PrintfStateMachine\Factory $factory,
   )[]: PrintfStateMachine\Factory {
-    return $factory->with(new EmbeddedLiteralStringHandler());
+    return $factory->with(new EmbeddedLiteralStringHandler('('));
   }
 }

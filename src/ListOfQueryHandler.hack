@@ -43,4 +43,8 @@ CODE
   public function getSpecifierText()[]: string {
     return $this->specifierText;
   }
+
+  public function withSpecifierText(string $specifier_text)[]: this {
+    return new static($specifier_text, $this->joinSequence);
+  }
 }

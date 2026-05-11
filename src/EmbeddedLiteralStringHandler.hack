@@ -4,6 +4,8 @@ namespace HTL\SqlQueryfCodegen;
 use namespace HTL\PrintfStateMachine;
 
 final class EmbeddedLiteralStringHandler implements PrintfStateMachine\Handler {
+  public function __construct(private string $specifierText)[] {}
+
   public function getArgumentTypeText()[]: ?PrintfStateMachine\HackType {
     return null;
   }
@@ -28,6 +30,10 @@ CODE
   }
 
   public function getSpecifierText()[]: string {
-    return '(';
+    return $this->specifierText;
+  }
+
+  public function withSpecifierText(string $specifier_text)[]: this {
+    return new static($specifier_text);
   }
 }
