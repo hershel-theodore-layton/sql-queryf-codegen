@@ -20,7 +20,7 @@ interface Sql {
   public function format_d(int $_)[]: string;
   public function format_e(\HTL\SqlQueryf\AnyEnum $_)[]: string;
   public function format_f(float $_)[]: string;
-  public function format_q(\HTL\SqlQueryf\QueryPack $_)[]: string;
+  public function format_q(\HTL\SqlQueryf\PackedQuery $_)[]: string;
   public function format_s(string $_)[]: string;
   public function format_0x25()[]: string;
   public function format_0x3d()[]: SqlWithEquals;
@@ -76,15 +76,15 @@ interface SqlWithUpperL {
 }
 
 interface SqlWithUpperLWithAmpersand {
-  public function format_q(vec<\HTL\SqlQueryf\QueryPack> $_)[]: string;
+  public function format_q(vec<\HTL\SqlQueryf\PackedQuery> $_)[]: string;
 }
 
 interface SqlWithUpperLWithComma {
-  public function format_q(vec<\HTL\SqlQueryf\QueryPack> $_)[]: string;
+  public function format_q(vec<\HTL\SqlQueryf\PackedQuery> $_)[]: string;
 }
 
 interface SqlWithUpperLWithPipe {
-  public function format_q(vec<\HTL\SqlQueryf\QueryPack> $_)[]: string;
+  public function format_q(vec<\HTL\SqlQueryf\PackedQuery> $_)[]: string;
 }
 
 function engine(
@@ -202,7 +202,7 @@ function engine(
               $done = true;
               break;
             case 0x71: // 'q'
-              $arg = $arg |> $$ as \HTL\SqlQueryf\QueryPack;
+              $arg = $arg |> $$ as \HTL\SqlQueryf\PackedQuery;
               $new_format .= '%Q';
               $new_args[] = $arg
                 |> engine($$->getFormat(), $$->getArguments())
@@ -473,7 +473,7 @@ function engine(
                 |> \HH\Lib\Vec\fill($$, '%Q')
                 |> \HH\Lib\Str\join($$, ' AND ');
               foreach ($arg as $pack) {
-                $pack as \HTL\SqlQueryf\QueryPack;
+                $pack as \HTL\SqlQueryf\PackedQuery;
                 $new_args[] = engine($pack->getFormat(), $pack->getArguments())
                   |> \HTL\SqlQueryf\HipHopLibSqlQueryPack::createWithoutTypechecking_UNSAFE(
                     ...$$
@@ -495,7 +495,7 @@ function engine(
                 |> \HH\Lib\Vec\fill($$, '%Q')
                 |> \HH\Lib\Str\join($$, ', ');
               foreach ($arg as $pack) {
-                $pack as \HTL\SqlQueryf\QueryPack;
+                $pack as \HTL\SqlQueryf\PackedQuery;
                 $new_args[] = engine($pack->getFormat(), $pack->getArguments())
                   |> \HTL\SqlQueryf\HipHopLibSqlQueryPack::createWithoutTypechecking_UNSAFE(
                     ...$$
@@ -517,7 +517,7 @@ function engine(
                 |> \HH\Lib\Vec\fill($$, '%Q')
                 |> \HH\Lib\Str\join($$, ' OR ');
               foreach ($arg as $pack) {
-                $pack as \HTL\SqlQueryf\QueryPack;
+                $pack as \HTL\SqlQueryf\PackedQuery;
                 $new_args[] = engine($pack->getFormat(), $pack->getArguments())
                   |> \HTL\SqlQueryf\HipHopLibSqlQueryPack::createWithoutTypechecking_UNSAFE(
                     ...$$

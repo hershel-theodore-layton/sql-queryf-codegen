@@ -11,7 +11,7 @@ final class ListOfQueryHandler implements PrintfStateMachine\Handler {
   )[] {}
 
   public function getArgumentTypeText()[]: PrintfStateMachine\HackType {
-    return PrintfStateMachine\hack_type('vec<\\HTL\\SqlQueryf\\QueryPack>');
+    return PrintfStateMachine\hack_type('vec<\\HTL\\SqlQueryf\\PackedQuery>');
   }
 
   public function getCaseBlock()[]: PrintfStateMachine\CaseBlock {
@@ -25,7 +25,7 @@ CODE
       . var_export_pure($this->joinSequence).<<<'CODE'
 );
 foreach ($arg as $pack) {
-  $pack as \HTL\SqlQueryf\QueryPack;
+  $pack as \HTL\SqlQueryf\PackedQuery;
   $new_args[] = engine($pack->getFormat(), $pack->getArguments())
     |> \HTL\SqlQueryf\HipHopLibSqlQueryPack::createWithoutTypechecking_UNSAFE(...$$);
 }

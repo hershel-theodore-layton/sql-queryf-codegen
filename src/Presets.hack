@@ -93,13 +93,13 @@ final abstract class Presets {
   /**
    * Adds support for `%C`, `%T`, `%LC`, `%K`, `%Q`, and `%q`.
    * The first five are all lifted from HH\Lib\Sql\Query.
-   * The latter repacks a `SqlQueryf\QueryPack` into a `HipHopLibSqlQueryPack`,
+   * The latter repacks a `SqlQueryf\PackedQuery` into a `HipHopLibSqlQueryPack`,
    * which is compatible with `HH\Lib\SQL\Query`.
    */
   public static function partialBase(
     PrintfStateMachine\Factory $factory,
   )[]: PrintfStateMachine\Factory {
-    $pack = '\\'.(string)SqlQueryf\QueryPack::class;
+    $pack = '\\'.(string)SqlQueryf\PackedQuery::class;
     return $factory
       ->withRewrite<string>('C')
       ->withRewrite<string>('T')
@@ -259,7 +259,7 @@ final abstract class Presets {
 
   /**
    * Adds support for `%L,q`, `%L|q`, and `%&q`.
-   * These take a `vec<SqlQueryf\QueryPack>` and join with `,`, ` OR `, and ` AND `
+   * These take a `vec<SqlQueryf\PackedQuery>` and join with `,`, ` OR `, and ` AND `
    * respectively. Useful when writing WHERE clauses or INSERT INTO statements
    * with multiple rows.
    */
