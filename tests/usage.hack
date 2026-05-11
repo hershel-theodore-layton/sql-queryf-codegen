@@ -243,7 +243,3 @@ function usage(TestChain\Chain $chain)[]: TestChain\Chain {
       );
     });
 }
-
-/*
-            case 0x71: // 'L|q'
-*/
