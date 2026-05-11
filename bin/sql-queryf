@@ -3,8 +3,8 @@
 namespace HTL\SqlQueryfCodegen\Bin;
 
 /**
- * Usage: cat tests/codegen/preamble.in | hhvm bin/sql-codegen-generate.hack --extended > tests/codegen/engine.hack
- * Usage: cat vendor/hershel-theodore-layton/sql-queryf/src/_Private/preamble.in | hhvm bin/sql-codegen-generate.hack --to-string
+ * Usage: cat tests/codegen/preamble.in | hhvm bin/sql-queryf.hack --extended | hackfmt > tests/codegen/engine.hack
+ * Usage: cat vendor/hershel-theodore-layton/sql-queryf/src/_Private/preamble.in | hhvm bin/sql-queryf.hack --to-string
  */
 <<__EntryPoint>>
 async function sql_queryf_wrapped_async()[defaults]: Awaitable<void> {
