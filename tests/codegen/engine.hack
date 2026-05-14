@@ -72,6 +72,7 @@ interface SqlWithUpperL {
   public function format_s(vec<string> $_)[]: string;
   public function format_0x26()[]: SqlWithUpperLWithAmpersand;
   public function format_0x2c()[]: SqlWithUpperLWithComma;
+  public function format_0x5f()[]: SqlWithUpperLWithUnderscore;
   public function format_0x7c()[]: SqlWithUpperLWithPipe;
 }
 
@@ -80,6 +81,10 @@ interface SqlWithUpperLWithAmpersand {
 }
 
 interface SqlWithUpperLWithComma {
+  public function format_q(vec<\HTL\SqlQueryf\PackedQuery> $_)[]: string;
+}
+
+interface SqlWithUpperLWithUnderscore {
   public function format_q(vec<\HTL\SqlQueryf\PackedQuery> $_)[]: string;
 }
 
@@ -406,8 +411,11 @@ function engine(
             case 0x2c: // 'L,' -> SqlWithUpperLWithComma
               $state = 7;
               break;
-            case 0x7c: // 'L|' -> SqlWithUpperLWithPipe
+            case 0x5f: // 'L_' -> SqlWithUpperLWithUnderscore
               $state = 8;
+              break;
+            case 0x7c: // 'L|' -> SqlWithUpperLWithPipe
+              $state = 9;
               break;
             default:
               invariant_violation('Unexpected 0x%x at %d', $char, $char_i);
@@ -510,6 +518,28 @@ function engine(
           break;
 
         case 8:
+          switch ($char) {
+            case 0x71: // 'L_q'
+              $arg as vec<_>;
+              $new_format .= \HH\Lib\C\count($arg)
+                |> \HH\Lib\Vec\fill($$, '%Q')
+                |> \HH\Lib\Str\join($$, ' ');
+              foreach ($arg as $pack) {
+                $pack as \HTL\SqlQueryf\PackedQuery;
+                $new_args[] = engine($pack->getFormat(), $pack->getArguments())
+                  |> \HTL\SqlQueryf\HipHopLibSqlQueryPack::createWithoutTypechecking_UNSAFE(
+                    ...$$
+                  );
+              }
+              ++$arg_i;
+              $done = true;
+              break;
+            default:
+              invariant_violation('Unexpected 0x%x at %d', $char, $char_i);
+          }
+          break;
+
+        case 9:
           switch ($char) {
             case 0x71: // 'L|q'
               $arg as vec<_>;

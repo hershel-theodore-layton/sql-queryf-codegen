@@ -268,7 +268,8 @@ final abstract class Presets {
   )[]: PrintfStateMachine\Factory {
     return $factory->with(new ListOfQueryHandler('L,q', ', '))
       ->with(new ListOfQueryHandler('L|q', ' OR '))
-      ->with(new ListOfQueryHandler('L&q', ' AND '));
+      ->with(new ListOfQueryHandler('L&q', ' AND '))
+      ->with(new ListOfQueryHandler('L_q', ' '));
   }
 
   /**
