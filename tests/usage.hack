@@ -165,7 +165,7 @@ function usage(TestChain\Chain $chain)[]: TestChain\Chain {
       expect(
         queryf_to_vanilla('SELECT %Le', vec[IntEnum::ONE, StringEnum::ONE]),
       )->toEqual(tuple('SELECT %Ld', vec[vec[IntEnum::ONE, StringEnum::ONE]]));
-      // This fail in squangle ^^^. Do NOT mix string and int enums.
+      // This fails in Squangle ^^. Do NOT mix string and int enums.
 
       expect(queryf_to_vanilla('SELECT %Lf', vec[12.34, 43.21]))
         ->toEqual(tuple('SELECT %Lf', vec[vec[12.34, 43.21]]));

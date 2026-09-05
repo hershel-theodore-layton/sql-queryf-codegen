@@ -6,8 +6,8 @@ use namespace HH\Lib\{C, IO, OS, Str, Vec};
 use namespace HTL\{PrintfStateMachine, SqlQueryfCodegen};
 
 /**
- * Usage: cat tests/codegen/preamble.in | hhvm bin/sql-codegen-generate.hack --extended > tests/codegen/engine.hack
- * Usage: cat vendor/hershel-theodore-layton/sql-queryf/src/_Private/preamble.in | hhvm bin/sql-codegen-generate.hack --to-string
+ * Usage: cat tests/codegen/preamble.in | hhvm bin/sql-queryf.hack --extended > tests/codegen/engine.hack
+ * Usage: cat vendor/hershel-theodore-layton/sql-queryf/src/_Private/preamble.in | hhvm bin/sql-queryf.hack --to-string
  */
 <<__EntryPoint>>
 async function sql_queryf_async()[defaults]: Awaitable<void> {

@@ -2,7 +2,7 @@
 
 _Customize your queryf DSL to your heart's content._
 
-This package contains some presets for you own sql-queryf engines.
+This package contains some presets for your own sql-queryf engines.
 The basic `HH\\Lib\\SQL\\Query`-like engine can be generated with
 `vendor/bin/sql-queryf --vanilla`. If you want to see what's possible,
 use `--extended` instead of `--vanilla`. If you want to customize,

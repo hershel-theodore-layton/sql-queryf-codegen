@@ -7,13 +7,13 @@ use namespace HTL\{PrintfStateMachine, SqlQueryf};
 final abstract class Presets {
   /**
    * This preset includes many of the conversions I use in my applications
-   * and some which demonstate the possibilities. You can mix and match what
+   * and some which demonstrate the possibilities. You can mix and match what
    * you like to create your own extended set, or use these as-is, your pick.
    *
    * The scalars are null-aware, so `%d` accepts `int`, not `?int`.
    * If you wanted to pass a nullable int, use `%?d`.
    * Support for booleans (`%b`), enums (`%e`),
-   * opaque ints and strings (`%D`) and (`%S`) respectively,
+   * opaque ints (`%D`) and strings (`%S`), respectively,
    * and lists of queries (`%L&q`, `%L|q`, and `%L,q`) are all included.
    * 
    * This preset also allows you to add literal strings into your queries,
@@ -51,7 +51,7 @@ final abstract class Presets {
    * This is the engine you get when installing sql-queryf from packagist.
    * It consumes the same templates as `HH\Lib\SQL\Query`, but emits a format
    * and args for `\vsprintf()` instead of `HH\Lib\SQL\Query`. If you want to
-   * map from your custom DSL (for example `extended`) to a loggable query,
+   * map from your custom DSL (for example, `extended`) to a loggable query,
    * you must first go to `vanilla`. Do not construct `HH\Lib\SQL\Query` objects
    * from your `HipHopLibSqlQueryPack` objects. Then pass the vanilla format
    * and args to the `to-string` engine.
@@ -184,8 +184,8 @@ final abstract class Presets {
    * The assumption is that all values are either `int` or `string`, but not a mix.
    * 
    * These extensions are not guaranteed to be stable in future versions.
-   * They rely on some arcane Hack/hhvm tomfoolery.
-   * Hack or hhvm may remove support for this at some point.
+   * They rely on some arcane Hack/HHVM tomfoolery.
+   * Hack or HHVM may remove support for this at some point.
    */
   public static function partialEnums(
     PrintfStateMachine\Factory $factory,
@@ -234,7 +234,7 @@ final abstract class Presets {
   /**
    * Adds support for `%D`, `%?D`, `%=D`, `%?=D`, `%LD`, `%S`, `%?S`, `%=S`, `%?=S`, and `%LS`.
    * The `D` variant accepts an `OpaqueInt`, and the `S` variant accepts an `OpaqueString`.
-   * If you define your own opaque types in terms of these, you can use them in sql.
+   * If you define your own opaque types in terms of these, you can use them in SQL.
    * 
    * `sql('SELECT * FROM %T WHERE %C %=D', $user->getId())`
    *
@@ -259,8 +259,8 @@ final abstract class Presets {
 
   /**
    * Adds support for `%L,q`, `%L|q`, and `%&q`.
-   * These take a `vec<SqlQueryf\PackedQuery>` and join with `,`, ` OR `, and ` AND `
-   * respectively. Useful when writing WHERE clauses or INSERT INTO statements
+   * These take a `vec<SqlQueryf\PackedQuery>` and join them with `,`, ` OR `, and ` AND `,
+   * respectively. This is useful when writing WHERE clauses or INSERT INTO statements
    * with multiple rows.
    */
   public static function partialListsOfQueries(
