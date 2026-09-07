@@ -12,7 +12,7 @@
     "hershel-theodore-layton/printf-state-machine": "<1",
     "hershel-theodore-layton/sql-queryf": "<1",
     "hershel-theodore-layton/static-type-assertion-code-generator": "<2",
-    "hershel-theodore-layton/portable-hack-ast-linters-server": ">=0.5.3 <1"
+    "hershel-theodore-layton/portable-hack-ast-linters-server": ">=0.5.4 <1"
   },
   "require-dev": {
     "hershel-theodore-layton/test-chain": "<1",

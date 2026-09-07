@@ -3,9 +3,9 @@
 namespace HTL\SqlQueryfCodegen\Bin;
 
 use namespace HH;
-use namespace HH\Lib\{C, File, IO, OS, Str, Vec};
+use namespace HH\Lib\{C, IO, OS, Str, Vec};
 use namespace HTL\{PrintfStateMachine, SqlQueryfCodegen};
-use function escapeshellarg, exec, file_exists, shell_exec;
+use function HTL\PhaLintersServer\hackfmt_and_sign_hack_source_do_not_use_async;
 
 /**
  * Usage: cat tests/codegen/preamble.in | hhvm bin/sql-queryf.hack --extended > tests/codegen/engine.hack
@@ -78,28 +78,5 @@ async function sql_queryf_async()[defaults]: Awaitable<void> {
   }
   $code = $preamble.
     SqlQueryfCodegen\codegen($factory, PrintfStateMachine\ENGINE_TEMPLATE);
-  using $temporary_file = File\temporary_file();
-  $file = $temporary_file->getHandle();
-  $path = $file->getPath();
-  await $file->writeAllAsync($code);
-  $formatted = shell_exec('hackfmt < '.escapeshellarg($path)) as string;
-  $file->seek(0);
-  $file->truncate();
-  await $file->writeAllAsync($formatted);
-  $output = vec[];
-  $status = 0;
-  $signer = __DIR__.
-    '/../vendor/hershel-theodore-layton/portable-hack-ast-linters-server/bin/pha-sign-hack-source.sh';
-  if (!file_exists($signer)) {
-    $signer = __DIR__.
-      '/../../portable-hack-ast-linters-server/bin/pha-sign-hack-source.sh';
-  }
-  exec(
-    escapeshellarg($signer).' '.escapeshellarg($path),
-    inout $output,
-    inout $status,
-  );
-  invariant($status === 0, 'Could not sign generated SQL engine');
-  $file->seek(0);
-  echo await $file->readAllAsync();
+  echo await hackfmt_and_sign_hack_source_do_not_use_async($code);
 }
