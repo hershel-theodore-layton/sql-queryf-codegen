@@ -3,7 +3,7 @@
 namespace HTL\SqlQueryfCodegen\Bin;
 
 /**
- * Usage: cat tests/codegen/preamble.in | hhvm bin/sql-queryf.hack --extended | hackfmt > tests/codegen/engine.hack
+ * Usage: cat tests/codegen/preamble.in | hhvm bin/sql-queryf.hack --extended > tests/codegen/engine.hack
  * Usage: cat vendor/hershel-theodore-layton/sql-queryf/src/_Private/preamble.in | hhvm bin/sql-queryf.hack --to-string
  */
 <<__EntryPoint>>

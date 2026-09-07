@@ -2,8 +2,10 @@
 /** sql-queryf-codegen is MIT licensed, see /LICENSE. */
 namespace HTL\SqlQueryfCodegen\Bin;
 
-use namespace HH\Lib\{C, IO, OS, Str, Vec};
+use namespace HH;
+use namespace HH\Lib\{C, File, IO, OS, Str, Vec};
 use namespace HTL\{PrintfStateMachine, SqlQueryfCodegen};
+use function escapeshellarg, exec, file_exists, shell_exec;
 
 /**
  * Usage: cat tests/codegen/preamble.in | hhvm bin/sql-queryf.hack --extended > tests/codegen/engine.hack
@@ -11,7 +13,7 @@ use namespace HTL\{PrintfStateMachine, SqlQueryfCodegen};
  */
 <<__EntryPoint>>
 async function sql_queryf_async()[defaults]: Awaitable<void> {
-  $argv = \HH\global_get('argv') as vec<_> |> Vec\map($$, $x ==> $x as string);
+  $argv = HH\global_get('argv') as vec<_> |> Vec\map($$, $x ==> $x as string);
 
   $fifty_milliseconds_in_ns = (int)50e6;
 
@@ -60,6 +62,44 @@ async function sql_queryf_async()[defaults]: Awaitable<void> {
     $factory = SqlQueryfCodegen\Presets::vanilla($factory);
   }
 
-  echo $preamble.
+  if (!Str\contains($preamble, "'digest:'")) {
+    if (Str\contains($preamble, 'Pragmas(')) {
+      $preamble = Str\replace(
+        $preamble,
+        'Pragmas(',
+        "Pragmas(vec['PhaLinters', 'digest:'], ",
+      );
+    } else {
+      if (!Str\contains($preamble, 'use type HTL\\Pragma\\Pragmas;')) {
+        $preamble .= "\nuse type HTL\\Pragma\\Pragmas;\n";
+      }
+      $preamble .= "\n<<file: Pragmas(vec['PhaLinters', 'digest:'])>>\n\n";
+    }
+  }
+  $code = $preamble.
     SqlQueryfCodegen\codegen($factory, PrintfStateMachine\ENGINE_TEMPLATE);
+  using $temporary_file = File\temporary_file();
+  $file = $temporary_file->getHandle();
+  $path = $file->getPath();
+  await $file->writeAllAsync($code);
+  $formatted = shell_exec('hackfmt < '.escapeshellarg($path)) as string;
+  $file->seek(0);
+  $file->truncate();
+  await $file->writeAllAsync($formatted);
+  $output = vec[];
+  $status = 0;
+  $signer = __DIR__.
+    '/../vendor/hershel-theodore-layton/portable-hack-ast-linters-server/bin/pha-sign-hack-source.sh';
+  if (!file_exists($signer)) {
+    $signer = __DIR__.
+      '/../../portable-hack-ast-linters-server/bin/pha-sign-hack-source.sh';
+  }
+  exec(
+    escapeshellarg($signer).' '.escapeshellarg($path),
+    inout $output,
+    inout $status,
+  );
+  invariant($status === 0, 'Could not sign generated SQL engine');
+  $file->seek(0);
+  echo await $file->readAllAsync();
 }

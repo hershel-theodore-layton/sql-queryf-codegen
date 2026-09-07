@@ -1,7 +1,7 @@
 /** sql-queryf-codegen is MIT licensed, see /LICENSE. */
 namespace HTL\SqlQueryfCodegen;
 
-use namespace HTL\PrintfStateMachine;
+use namespace HTL\{PrintfStateMachine, SqlQueryf};
 
 final class EmbeddedLiteralStringHandler implements PrintfStateMachine\Handler {
   public function __construct(private string $specifierText)[] {}
@@ -25,7 +25,7 @@ CODE
   }
 
   public function getHandCraftedInterfaceName()[]: PrintfStateMachine\HackType {
-    return \HTL\SqlQueryf\EmbeddedString::class
+    return SqlQueryf\EmbeddedString::class
       |> PrintfStateMachine\hack_type('\\'.$$);
   }
 
