@@ -258,7 +258,7 @@ final abstract class Presets {
   }
 
   /**
-   * Adds support for `%L,q`, `%L|q`, and `%&q`.
+   * Adds support for `%L,q`, `%L|q`, and `%L&q`.
    * These take a `vec<SqlQueryf\PackedQuery>` and join them with `,`, ` OR `, and ` AND `,
    * respectively. This is useful when writing WHERE clauses or INSERT INTO statements
    * with multiple rows.
