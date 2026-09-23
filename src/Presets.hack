@@ -130,14 +130,14 @@ final abstract class Presets {
     PrintfStateMachine\Factory $factory,
   )[]: PrintfStateMachine\Factory {
     return $factory
-      ->withRewrite<int>('d')
-      ->withRewrite<int>('=d')
+      ->withRewrite<?int>('d')
+      ->withRewrite<?int>('=d')
       ->withRewrite<vec<int>>('Ld')
-      ->withRewrite<float>('f')
-      ->withRewrite<float>('=f')
+      ->withRewrite<?float>('f')
+      ->withRewrite<?float>('=f')
       ->withRewrite<vec<float>>('Lf')
-      ->withRewrite<string>('s')
-      ->withRewrite<string>('=s')
+      ->withRewrite<?string>('s')
+      ->withRewrite<?string>('=s')
       ->withRewrite<vec<string>>('Ls');
   }
 
