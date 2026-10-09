@@ -31,9 +31,6 @@ final class StaticTypeAssertionGenerator
       $m ==> {
         throw new Exception($m);
       },
-      ($x, $y) ==> {
-        throw new Exception(($x ?? '').'::'.$y);
-      },
     )
       |> StaticTypeAssertionCodegen\emit_body_for_assertion_function($$);
     $type = TypeVisitor\visit<T, _, _>($this->typeVisitor);
