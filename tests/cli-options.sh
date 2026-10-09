@@ -38,8 +38,11 @@ for preset in default vanilla extended to-string; do
   test -s "$scratch/$preset"
 done
 cmp "$scratch/default" "$scratch/vanilla"
-! cmp -s "$scratch/vanilla" "$scratch/extended"
-! cmp -s "$scratch/vanilla" "$scratch/to-string"
+if cmp -s "$scratch/vanilla" "$scratch/extended" ||
+  cmp -s "$scratch/vanilla" "$scratch/to-string"; then
+  echo 'A non-vanilla preset generated the vanilla engine.' >&2
+  exit 1
+fi
 hhvm ${HHVM_FLAGS:-} -dhhvm.jit=0 bin/sql-queryf.hack --vanilla --vanilla < tests/codegen/preamble.in > "$scratch/repeated"
 cmp "$scratch/vanilla" "$scratch/repeated"
 echo 'CLI option checks passed.'
