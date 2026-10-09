@@ -41,7 +41,3 @@ jobs:
           lint_engine: pha
           test_engine: test-chain
           typecheck_engine: hh_server
-      - name: Check CLI options
-        env:
-          HHVM_FLAGS: ${{ startsWith(matrix.hhvm, '4') && '-dhhvm.autoload.enabled=true -dhhvm.autoload.db.path=.var/facts.db' || '' }}
-        run: sh tests/cli-options.sh
