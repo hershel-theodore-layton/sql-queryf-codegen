@@ -3,7 +3,7 @@
 namespace HTL\SqlQueryfCodegen\Bin;
 
 use namespace HH;
-use namespace HH\Lib\{File, IO, OS, Str, Vec};
+use namespace HH\Lib\{IO, OS, Str, Vec};
 use namespace HTL\{HackCompiler, PrintfStateMachine, SqlQueryfCodegen};
 
 /**
@@ -101,7 +101,5 @@ async function sql_queryf_async()[defaults]: Awaitable<void> {
   }
   $code = $preamble.
     SqlQueryfCodegen\codegen($factory, PrintfStateMachine\ENGINE_TEMPLATE);
-  using $output = File\temporary_file();
-  await HackCompiler\write_source_async($code, $output->getHandle()->getPath());
-  echo await $output->getHandle()->readAllAsync();
+  echo await HackCompiler\process_source_file_async($code);
 }
