@@ -3,9 +3,9 @@
 namespace HTL\SqlQueryfCodegen\Bin;
 
 use namespace HH;
-use namespace HH\Lib\{IO, OS, Str, Vec};
+use namespace HH\Lib\{File, IO, OS, Str, Vec};
+use namespace HTL\HackCompiler;
 use namespace HTL\{PrintfStateMachine, SqlQueryfCodegen};
-use function HTL\PhaLintersServer\hackfmt_and_sign_hack_source_do_not_use_async;
 
 /**
  * Usage: cat tests/codegen/preamble.in | hhvm bin/sql-queryf.hack --extended > tests/codegen/engine.hack
@@ -102,5 +102,7 @@ async function sql_queryf_async()[defaults]: Awaitable<void> {
   }
   $code = $preamble.
     SqlQueryfCodegen\codegen($factory, PrintfStateMachine\ENGINE_TEMPLATE);
-  echo await hackfmt_and_sign_hack_source_do_not_use_async($code);
+  using $output = File\temporary_file();
+  await HackCompiler\write_source_async($code, $output->getHandle()->getPath());
+  echo await $output->getHandle()->readAllAsync();
 }
