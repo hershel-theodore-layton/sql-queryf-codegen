@@ -4,8 +4,7 @@ namespace HTL\SqlQueryfCodegen\Bin;
 
 use namespace HH;
 use namespace HH\Lib\{File, IO, OS, Str, Vec};
-use namespace HTL\HackCompiler;
-use namespace HTL\{PrintfStateMachine, SqlQueryfCodegen};
+use namespace HTL\{HackCompiler, PrintfStateMachine, SqlQueryfCodegen};
 
 /**
  * Usage: cat tests/codegen/preamble.in | hhvm bin/sql-queryf.hack --extended > tests/codegen/engine.hack
