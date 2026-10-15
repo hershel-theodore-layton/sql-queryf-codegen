@@ -57,12 +57,11 @@ async function sql_queryf_async()[defaults]: Awaitable<void> {
     return;
   }
 
-  $fifty_milliseconds_in_ns = (int)50e6;
-
-  try {
-    $preamble =
-      await IO\request_input()->readAllAsync(null, $fifty_milliseconds_in_ns);
-  } catch (OS\BlockingIOException $_) {
+  // Pipes and files contain a complete document; wait for EOF.
+  // An interactive invocation uses the default without consuming terminal input.
+  if (!OS\isatty(OS\stdin())) {
+    $preamble = await IO\request_input()->readAllAsync();
+  } else {
     $preamble = Str\format(
       "// NO LICENSE HEADER INCLUDED\n".
       "// You can specify this preamble by catting in a preamble file.\n".
