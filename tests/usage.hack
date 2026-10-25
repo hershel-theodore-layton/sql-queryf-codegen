@@ -219,6 +219,18 @@ function usage(TestChain\Chain $chain)[]: TestChain\Chain {
       expect(queryf_to_vanilla('SELECT * FROM %T WHERE %Q', 'mytable', $native))
         ->toEqual(tuple('SELECT * FROM %T WHERE %Q', vec['mytable', $native]));
     })
+    ->test('compound query lists preserve caller grouping', () ==> {
+      expect(queryf_to_string('%L&q', vec[
+        queryf('a = %d OR b = %d', 1, 2),
+        queryf('c = %d', 3),
+      ]))->toEqual('a = 1 OR b = 2 AND c = 3');
+      expect(queryf_to_string('%L&q', vec[
+        queryf('(a = %d OR b = %d)', 1, 2),
+        queryf('c = %d', 3),
+      ]))->toEqual('(a = 1 OR b = 2) AND c = 3');
+      expect(queryf_to_string('%L_q', vec[queryf('SELECT'), queryf('%d', 1)]))
+        ->toEqual('SELECT 1');
+    })
     ->test('lists of queries', () ==> {
       expect(queryf_to_string(
         'SELECT %L,q FROM %T',

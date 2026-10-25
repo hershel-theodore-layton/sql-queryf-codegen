@@ -14,7 +14,7 @@ final abstract class Presets {
    * If you wanted to pass a nullable int, use `%?d`.
    * Support for booleans (`%b`), enums (`%e`),
    * opaque ints (`%D`) and strings (`%S`), respectively,
-   * and lists of queries (`%L&q`, `%L|q`, and `%L,q`) are all included.
+   * and lists of queries (`%L&q`, `%L|q`, `%L,q`, and `%L_q`) are all included.
    * 
    * This preset also allows you to add literal strings into your queries,
    * like so: `SELECT * FROM %T WHERE %C = %(Some constant string)%`.
@@ -36,7 +36,7 @@ final abstract class Presets {
   }
 
   /**
-   * Emulate `HH\Lib\SQL\Query`, but add `%q` to support `Format\Pack`.
+   * Emulate `HH\Lib\SQL\Query`, but add `%q` to support `SqlQueryf\PackedQuery`.
    * You don't need to change your existing queries with this preset.
    */
   public static function vanilla(
@@ -164,7 +164,7 @@ final abstract class Presets {
 
   /**
    * Adds support for `%b`, `%?b`, `%=b`, `%?=b`, and `%Lb`.
-   * True and false are rewritten to `0` and `1` respectively.
+   * True and false are rewritten to `1` and `0` respectively.
    */
   public static function partialBooleans(
     PrintfStateMachine\Factory $factory,
@@ -236,10 +236,10 @@ final abstract class Presets {
    * The `D` variant accepts an `OpaqueInt`, and the `S` variant accepts an `OpaqueString`.
    * If you define your own opaque types in terms of these, you can use them in SQL.
    * 
-   * `sql('SELECT * FROM %T WHERE %C %=D', $user->getId())`
+   * `sql('SELECT * FROM %T WHERE %C %=D', 'users', 'id', $user->getId())`
    *
-   * For even more type-safety,
-   * you can add your own `Id` type, and add it like the code below.
+   * For an application-specific `Id`, register its own rewrite with
+   * `$factory->withRewrite<Id>('I', 'd')` and use `%I`.
    */
   public static function partialOpaqueStringsAndInts(
     PrintfStateMachine\Factory $factory,
@@ -258,10 +258,12 @@ final abstract class Presets {
   }
 
   /**
-   * Adds support for `%L,q`, `%L|q`, and `%L&q`.
-   * These take a `vec<SqlQueryf\PackedQuery>` and join them with `,`, ` OR `, and ` AND `,
-   * respectively. This is useful when writing WHERE clauses or INSERT INTO statements
-   * with multiple rows.
+   * Adds support for `%L,q`, `%L|q`, `%L&q`, and `%L_q`.
+   * These take a `vec<SqlQueryf\PackedQuery>` and join them with `, `,
+   * ` OR `, ` AND `, and a single space, respectively.
+   * The AND/OR variants do not add parentheses: group compound conditions
+   * yourself, for example `sql('(a = %d OR b = %d)', 1, 2)` inside `%L&q`.
+   * These lists are useful for WHERE clauses or multi-row INSERT statements.
    */
   public static function partialListsOfQueries(
     PrintfStateMachine\Factory $factory,
