@@ -84,21 +84,8 @@ async function sql_queryf_async()[defaults]: Awaitable<void> {
     $factory = SqlQueryfCodegen\Presets::vanilla($factory);
   }
 
-  if (!Str\contains($preamble, "'digest:'")) {
-    if (Str\contains($preamble, 'Pragmas(')) {
-      $preamble = Str\replace(
-        $preamble,
-        'Pragmas(',
-        "Pragmas(vec['PhaLinters', 'digest:'], ",
-      );
-    } else {
-      if (!Str\contains($preamble, 'use type HTL\\Pragma\\Pragmas;')) {
-        $preamble .= "\nuse type HTL\\Pragma\\Pragmas;\n";
-      }
-      $preamble .= "\n<<file: Pragmas(vec['PhaLinters', 'digest:'])>>\n\n";
-    }
-  }
-  $code = $preamble.
+  $code = HackCompiler\prepare_signing_preamble($preamble).
+    "\n".
     SqlQueryfCodegen\codegen($factory, PrintfStateMachine\ENGINE_TEMPLATE);
   echo await HackCompiler\process_source_file_async($code);
 }
